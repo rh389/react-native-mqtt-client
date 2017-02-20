@@ -1,0 +1,54 @@
+{
+  "name": "react-native-mqtt-client",
+  "version": "0.0.1",
+  "description": "A minimal MQTT client for React Native",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "flow": "flow",
+    "jest": "jest",
+    "test": "eslint . && flow && jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rh389/react-native-mqtt-client.git"
+  },
+  "keywords": [
+    "react-native",
+    "mqtt",
+    "client"
+  ],
+  "author": "Rob Hogan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rh389/react-native-mqtt-client/issues"
+  },
+  "homepage": "https://github.com/rh389/react-native-mqtt-client#readme",
+  "dependencies": {
+    "events": "^1.1.1"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.22.2",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^18.0.0",
+    "babel-preset-react-native": "^1.9.1",
+    "buffer": "^5.0.5",
+    "eslint": "^3.15.0",
+    "flow-bin": "0.38",
+    "jest-cli": "^18.1.0",
+    "mosca": "^2.2.0",
+    "mqtt-packet": "^5.2.1",
+    "websocket": "^1.0.24"
+  },
+  "jest": {
+    "transform": {
+      ".*": "<rootDir>/node_modules/babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "testRegex": "/test/.*\\.test\\.js$"
+  }
+}
