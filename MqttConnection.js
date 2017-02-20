@@ -30,11 +30,11 @@ export class MqttWire extends EventEmitter {
     });
 
     socket.on('error', (message: any) => {
-      console.warn('socket error', message);
+      this.emit('error', message);
     });
 
     socket.on('close', (message: any) => {
-      console.warn('socket closed', message);
+      this.emit('close', message);
     });
   }
 
@@ -53,26 +53,28 @@ export class MqttWire extends EventEmitter {
     const { cmd, timeoutMs } = ackOpts;
 
     return new Promise((resolve, reject) => {
-      const timeoutTimer = timeoutMs && setTimeout(() => {
-          this.removeListener(cmd, ackListener);
-          reject(new Error('wire_' + cmd + '_timeout'));
-        }, timeoutMs);
 
-      const errorListener = () => {
-        this.removeListener(cmd, errorListener);
-        reject(new Error('wire_no_ack'));
-      };
+      const timeoutTimer = timeoutMs && setTimeout(() => completePromise(new Error('wire_' + cmd + '_timeout')), timeoutMs);
 
-      const ackListener = (ackPacket) => {
-        if (opts.messageId && opts.messageId !== ackPacket.messageId) {
-          return; //Ack is for some other listener
+      const listeners = {
+        error: (e) => completePromise(e),
+        close: (e) => completePromise(e),
+        [cmd]: (ackPacket) => {
+          if (opts.messageId && opts.messageId !== ackPacket.messageId) {
+            return; //Ack is for some other listener - ignore
+          }
+          completePromise(null, ackPacket);
         }
-        this.removeListener(cmd, ackListener);
-        timeoutTimer && clearTimeout(timeoutTimer);
-        resolve(ackPacket);
       };
 
-      this.on(cmd, ackListener);
+      const completePromise = (err, result) => {
+        Object.keys(listeners).forEach((eventName) => this.removeListener(eventName, listeners[eventName]));
+        timeoutTimer && clearTimeout(timeoutTimer);
+        return err ? reject(err) : resolve(result);
+      };
+
+      Object.keys(listeners).forEach((eventName) => this.on(eventName, listeners[eventName]));
+
       return this._socket.send(generate(opts));
     });
   }
