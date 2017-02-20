@@ -1,4 +1,5 @@
 /* @flow */
+
 import EventEmitter from 'events';
 import { Socket } from './Socket';
 

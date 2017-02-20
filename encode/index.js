@@ -1,8 +1,10 @@
+/* @flow */
+
 import publish from './publish';
 import connect from './connect';
 import base from './base';
 import { subscribe, unsubscribe } from './subunsub';
-import { MqttPacket } from '../Packet';
+import type { MqttPacket } from '../Packet';
 
 const puback = (id: number) => base('puback', id);
 const pubcomp = (id: number) => base('pubcomp', id);

@@ -1,4 +1,5 @@
 /* @flow */
+
 import { MqttWire } from './MqttConnection';
 import { Socket } from './Socket';
 import EventEmitter from 'events';
