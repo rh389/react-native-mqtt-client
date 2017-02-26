@@ -3,7 +3,7 @@
 import { MqttWire } from './MqttConnection';
 import { Socket } from './Socket';
 import EventEmitter from 'events';
-import type { ConnackPacket, ConnectPacket, PublishPacket } from './Packet';
+import type { ConnackPacket, ConnectPacket, PublishOptions } from './Packet';
 
 export {
   Socket,
@@ -81,7 +81,7 @@ export class Client extends EventEmitter {
       });
   }
 
-  publish({ topic, payload, qos = 0, dup = false, retain = false, cmd = 'publish' }: PublishPacket) {
+  publish({ topic, payload, qos = 0, dup = false, retain = false }: PublishOptions) {
     let ack;
 
     if (qos === 1) {

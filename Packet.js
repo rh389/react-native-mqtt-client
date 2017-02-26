@@ -66,15 +66,16 @@ export type PingrespPacket = { cmd: 'pingesp', messageId: number };
 export type PingreqPacket = { cmd: 'pingreq', messageId: number };
 export type DisconnectPacket = { cmd: 'disconnect', messageId: number };
 
-export type PublishPacket = {
-  cmd: 'publish',
+export type PublishOptions = {
   messageId?: number,
   qos: 0 | 1 | 2,
   dup?: boolean,
   topic: string,
   payload: string | ArrayBuffer,
   retain?: boolean
-};
+}
+
+export type PublishPacket = PublishOptions & { cmd: 'publish' };
 
 export type MqttPacket = ConnectPacket | ConnackPacket | SubscribePacket | SubackPacket | UnsubscribePacket |
   UnsubackPacket | PubackPacket | PubrelPacket | PubcompPacket | PubrecPacket | PingrespPacket | PingreqPacket |

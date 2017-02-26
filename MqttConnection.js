@@ -29,8 +29,8 @@ export class MqttWire extends EventEmitter {
       this._parser.parse(message);
     });
 
-    socket.on('error', (message: any) => {
-      this.emit('error', message);
+    socket.on('error', (err) => {
+      this.emit('error', err);
     });
 
     socket.on('close', (message: any) => {
