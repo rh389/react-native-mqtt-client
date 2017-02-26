@@ -26,8 +26,8 @@ export class Socket extends EventEmitter {
     socket.onclose = (message: Event) => {
       this.emit('close', message);
     };
-    socket.onerror = (message: any) => {
-      this.emit('error', message);
+    socket.onerror = (e) => {
+      this.emit('error', new Error('socket_error'));
     };
     socket.onmessage = (message: { data: any }) => {
       this.emit('message', message.data);

@@ -18,7 +18,8 @@ describe('Integration tests', () => {
     });
     client.connect()
       .then(() => client.subscribe('World', 1))
-      .then(() => client.publish({ topic: 'World', payload: 'Hello', qos: 1}));
+      .then(() => client.publish({ topic: 'World', payload: 'Hello', qos: 1}))
+      .catch(done);
   });
 
   test('should disconnect and reconnect cleanly', () =>
