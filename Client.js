@@ -22,6 +22,14 @@ export class Client extends EventEmitter {
           .catch(e => null);
       }
     });
+
+    this._conn.on('close', () => {
+      this.emit('connectionLost');
+    });
+
+    this._conn.on('error', (err) => {
+      console.warn(err);
+    });
   }
 
   subscribe(topics: string | (string | [string, 0 | 1 | 2])[], qos: 0 | 1 | 2 = 0): Promise<(0 | 1 | 2)[]> {
